@@ -5,7 +5,7 @@ const bibleData = [
     { ref: "Proverbios 3:5", text: "Confía en el Señor de todo corazón, y no en tu propia inteligencia.", ex: "A veces creemos que nos las sabemos todas, pero los planes de Dios son mejores, aunque ahora no los entiendas." },
     { ref: "Mateo 6:34", text: "No se preocupen por el día de mañana, porque el día de mañana traerá sus propias preocupaciones.", ex: "Jesús te dice: 'Relájate'. No te agobies hoy por lo que pasará la semana que viene. Vive un día a la vez." },
     { ref: "Josué 1:9", text: "Sé fuerte y valiente. No tengas miedo ni te desanimes, porque el Señor tu Dios estará contigo.", ex: "Es normal tener miedo ante cosas nuevas, pero recuerda que Dios es tu compañero de equipo fiel." },
-    { ref: "Jeremías 29:11", text: "Yo sé los planes que tengo para ustedes, planes de bienestar y no de calamidad, para darles un futuro y una esperanza.", ex: "Aunque las cosas salgan mal hoy, Dios ya tiene preparado el final de tu historia, y es un final bueno." },
+    { ref: "Jeremías 29:11", text: "Yo sé los planes que tengo para ustedes, planes de bienestar y no de calamidad.", ex: "Aunque las cosas salgan mal hoy, Dios ya tiene preparado el final de tu historia, y es un final bueno." },
     { ref: "Romanos 8:28", text: "Sabemos que Dios dispone todas las cosas para el bien de quienes lo aman.", ex: "Hasta de los errores o los momentos vergonzosos, Dios puede sacar algo bueno para ti si confías en Él." },
     { ref: "Isaías 41:10", text: "No temas, porque yo estoy contigo; no te angusties, porque yo soy tu Dios.", ex: "Cuando sientas ansiedad en el pecho, respira hondo y recuerda que el Creador del universo está a tu lado." },
     { ref: "Juan 3:16", text: "Porque tanto amó Dios al mundo que dio a su Hijo unigénito, para que todo el que cree en él no se pierda.", ex: "Es la prueba definitiva de amor: Dios te quiere tanto que dio lo más valioso que tenía por ti." },
@@ -37,10 +37,10 @@ const bibleData = [
     { ref: "Marcos 9:23", text: "¿Cómo que si puedes? Para el que cree, todo es posible.", ex: "No te pongas límites mentales. Si tienes fe, puedes lograr cosas que parecen imposibles." },
     { ref: "Lucas 6:31", text: "Traten a los demás tal y como quieren que ellos los traten a ustedes.", ex: "Es simple: si quieres amigos leales, sé leal. Si quieres que te perdonen, perdona tú primero." },
     { ref: "Salmos 56:3", text: "Cuando siento miedo, pongo en ti mi confianza.", ex: "El miedo es una emoción normal, pero la confianza en Dios es la herramienta para vencerlo." },
-    { ref: "Isaías 9:6", text: "Porque nos ha nacido un niño... y se le darán estos nombres: Admirable Consejero, Dios Fuerte.", ex: "Jesús no es solo una historia antigua; es tu Consejero personal para los problemas de hoy." },
+    { ref: "Isaías 9:6", text: "Porque nos ha nacido un niño... y se le darán estos nombres: Admirable Consejero.", ex: "Jesús no es solo una historia antigua; es tu Consejero personal para los problemas de hoy." },
     { ref: "Juan 16:33", text: "En este mundo afrontarán aflicciones, pero ¡anímense! Yo he vencido al mundo.", ex: "Vas a tener días malos, es inevitable. Pero anímate, porque Jesús ya ganó la batalla final por ti." },
     { ref: "Salmos 118:24", text: "Este es el día en que el Señor actuó; regocijémonos y alegrémonos en él.", ex: "No esperes al fin de semana para ser feliz. Hoy es un regalo de Dios, ¡disfrútalo!" },
-    { ref: "2 Corintios 5:17", text: "Por lo tanto, si alguno está en Cristo, es una nueva creación. ¡Lo viejo ha pasado, ha llegado ya lo nuevo!", ex: "Con Dios siempre puedes empezar de cero. Tu pasado no define tu futuro." },
+    { ref: "2 Corintios 5:17", text: "Por lo tanto, si alguno está en Cristo, es una nueva creación.", ex: "Con Dios siempre puedes empezar de cero. Tu pasado no define tu futuro." },
     { ref: "Efesios 4:32", text: "Más bien, sean bondadosos y compasivos unos con otros, y perdónense mutuamente.", ex: "Guardar rencor es como beber veneno esperando que le duela al otro. Perdona y serás libre." },
     { ref: "1 Juan 4:18", text: "En el amor no hay temor, sino que el amor perfecto echa fuera el temor.", ex: "Si sabes cuánto te ama Dios, dejarás de tener miedo al rechazo de los demás." },
     { ref: "Mateo 11:28", text: "Vengan a mí todos ustedes que están cansados y agobiados, y yo les daré descanso.", ex: "Cuando sientas que no puedes más con la escuela o los problemas, habla con Jesús. Él te da paz." },
@@ -52,63 +52,85 @@ const bibleData = [
     { ref: "Apocalipsis 3:20", text: "Mira que estoy a la puerta y llamo. Si alguno oye mi voz y abre la puerta, entraré.", ex: "Dios es un caballero, no entra a la fuerza en tu vida. Él espera a que tú le invites a entrar." }
 ];
 
-// --- LOGICA DE LA APP ---
+// --- LOGICA DE LA APP (1 Versículo por Día) ---
 const btnGenerate = document.getElementById('btn-generate');
 const verseCard = document.getElementById('verse-card');
 const refDisplay = document.getElementById('verse-reference');
 const textDisplay = document.getElementById('verse-text');
 const exDisplay = document.getElementById('verse-explanation');
 const streakCountDisplay = document.getElementById('streak-count');
+const instructionText = document.getElementById('instruction-text');
 
-function checkStreak() {
-    let streak = parseInt(localStorage.getItem('bibleStreak')) || 0;
-    const lastVisit = localStorage.getItem('lastVisitDate');
+function checkDailyStatus() {
     const today = new Date().toDateString();
+    const savedDate = localStorage.getItem('dailyVerseDate');
+    const savedVerseIndex = localStorage.getItem('dailyVerseIndex');
 
-    if (lastVisit !== today) {
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-        if (lastVisit !== yesterday.toDateString() && lastVisit !== null) {
-            streak = 0; 
+    // Recuperar racha
+    let streak = parseInt(localStorage.getItem('bibleStreak')) || 0;
+    streakCountDisplay.innerText = streak;
+
+    // Si ya leyó hoy
+    if (savedDate === today && savedVerseIndex !== null) {
+        showSavedVerse(bibleData[savedVerseIndex]);
+        disableButton();
+    } else {
+        // Comprobar si se rompió la racha ayer
+        const lastVisit = localStorage.getItem('lastVisitDate');
+        if (lastVisit) {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            if (lastVisit !== yesterday.toDateString() && lastVisit !== today) {
+                localStorage.setItem('bibleStreak', 0);
+                streakCountDisplay.innerText = 0;
+            }
         }
     }
-    streakCountDisplay.innerText = streak;
-    return streak;
 }
 
-function updateStreak() {
-    let streak = parseInt(localStorage.getItem('bibleStreak')) || 0;
-    const lastVisit = localStorage.getItem('lastVisitDate');
+function showSavedVerse(verse) {
+    refDisplay.innerText = verse.ref;
+    textDisplay.innerText = `"${verse.text}"`;
+    exDisplay.innerText = verse.ex;
+    verseCard.classList.remove('hidden');
+}
+
+function disableButton() {
+    btnGenerate.classList.add('btn-disabled');
+    btnGenerate.innerHTML = '<i class="fas fa-check"></i> Vuelve mañana';
+    btnGenerate.disabled = true;
+    instructionText.innerText = "Ya has leído tu palabra de hoy. Reflexiona sobre ella.";
+}
+
+function generateNewVerse() {
+    // 1. Elegir versículo al azar
+    const randomIndex = Math.floor(Math.random() * bibleData.length);
+    const verse = bibleData[randomIndex];
+
+    // 2. Guardar en memoria (Para que no pueda generar más hoy)
     const today = new Date().toDateString();
+    localStorage.setItem('dailyVerseDate', today);
+    localStorage.setItem('dailyVerseIndex', randomIndex);
+    localStorage.setItem('lastVisitDate', today);
 
-    if (lastVisit !== today) {
-        streak++;
-        localStorage.setItem('bibleStreak', streak);
-        localStorage.setItem('lastVisitDate', today);
-        streakCountDisplay.innerText = streak;
-        
-        const fireIcon = document.querySelector('.streak-container i');
-        fireIcon.style.transform = "scale(1.5)";
-        setTimeout(() => fireIcon.style.transform = "scale(1)", 300);
-    }
-}
+    // 3. Actualizar racha
+    let streak = parseInt(localStorage.getItem('bibleStreak')) || 0;
+    streak++;
+    localStorage.setItem('bibleStreak', streak);
+    streakCountDisplay.innerText = streak;
 
-function showRandomVerse() {
-    verseCard.classList.add('hidden');
+    // 4. Mostrar y Bloquear
+    showSavedVerse(verse);
+    disableButton();
     
-    setTimeout(() => {
-        const randomIndex = Math.floor(Math.random() * bibleData.length);
-        const verse = bibleData[randomIndex];
+    // Animación fuego
+    const fireIcon = document.querySelector('.streak-container i');
+    fireIcon.style.transform = "scale(1.5)";
+    setTimeout(() => fireIcon.style.transform = "scale(1)", 300);
 
-        refDisplay.innerText = verse.ref;
-        textDisplay.innerText = `"${verse.text}"`;
-        exDisplay.innerText = verse.ex;
-
-        verseCard.classList.remove('hidden');
-        updateStreak();
-        verseCard.scrollIntoView({ behavior: 'smooth' });
-    }, 200);
+    verseCard.scrollIntoView({ behavior: 'smooth' });
 }
 
-checkStreak();
-btnGenerate.addEventListener('click', showRandomVerse);
+// Iniciar
+checkDailyStatus();
+btnGenerate.addEventListener('click', generateNewVerse);

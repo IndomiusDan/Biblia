@@ -93,4 +93,13 @@ h3 { margin: 15px 0 10px 0; font-family: 'Merriweather', serif; font-size: 1.3re
 }
 .btn-primary:active { transform: scale(0.98); background: #6d4a2e; }
 
+/* Estilo para botón desactivado */
+.btn-disabled {
+    background: #ccc !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    color: #666 !important;
+}
+
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
