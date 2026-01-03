@@ -1,0 +1,112 @@
+:root {
+    --primary: #d4a373; /* Dorado suave */
+    --secondary: #faedcd; /* Crema */
+    --text: #333;
+    --text-light: #666;
+    --white: #ffffff;
+    --fire: #ff9f43; /* Color fuego para la racha */
+    --bg: #fdfbf7;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+    background-color: var(--bg);
+    font-family: 'Poppins', sans-serif;
+    color: var(--text);
+    padding-bottom: 50px;
+}
+
+/* Cabecera */
+header {
+    background: var(--white);
+    padding: 15px 20px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.header-content {
+    max-width: 600px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+}
+
+.brand { font-weight: 700; font-size: 1.2rem; color: var(--primary); display: flex; gap: 8px; align-items: center; }
+
+.streak-container {
+    background: #fff3e0;
+    color: var(--fire);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex; align-items: center; gap: 5px;
+}
+
+/* Portada */
+.hero-section { position: relative; height: 200px; width: 100%; overflow: hidden; }
+.hero-img { width: 100%; height: 100%; object-fit: cover; }
+.hero-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    padding: 20px; color: white; text-align: center;
+}
+
+.container { max-width: 600px; margin: 0 auto; padding: 20px; }
+
+/* Tarjeta Versículo */
+.card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(212, 163, 115, 0.15);
+    margin-bottom: 30px;
+    border: 1px solid var(--secondary);
+    animation: slideUp 0.6s ease-out;
+}
+.hidden { display: none; }
+
+.badge {
+    background: var(--secondary); color: var(--primary);
+    padding: 5px 10px; border-radius: 8px;
+    font-size: 0.7rem; text-transform: uppercase; font-weight: 700;
+    letter-spacing: 1px;
+}
+
+h3 { margin: 15px 0 10px 0; font-family: 'Merriweather', serif; font-size: 1.4rem; }
+
+.verse-text {
+    font-family: 'Merriweather', serif;
+    font-style: italic; font-size: 1.1rem; line-height: 1.6;
+    color: #444; margin-bottom: 25px;
+}
+
+.explanation-box {
+    background: #f8f9fa;
+    border-left: 4px solid var(--primary);
+    padding: 15px; border-radius: 8px;
+}
+
+.explanation-box h4 { font-size: 0.9rem; margin-bottom: 5px; color: var(--primary); }
+.explanation-box p { font-size: 0.9rem; line-height: 1.5; color: var(--text-light); }
+
+/* Botón */
+.action-area { text-align: center; margin-top: 20px; }
+.instruction { margin-bottom: 15px; font-size: 0.9rem; color: #888; }
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary), #eec08e);
+    border: none;
+    padding: 18px 40px;
+    border-radius: 50px;
+    color: white; font-size: 1.1rem; font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(212, 163, 115, 0.4);
+    transition: transform 0.2s;
+    width: 100%;
+}
+.btn-primary:active { transform: scale(0.97); }
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
