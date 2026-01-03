@@ -6,7 +6,6 @@
     <title>Biblia Diaria</title>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ffffff">
@@ -16,18 +15,18 @@
     <header>
         <div class="header-content">
             <div class="brand">
-                <i class="fas fa-book-open"></i> Biblia
+                <i class="fas fa-book-bible"></i> Palabra Diaria
             </div>
-            <div class="streak-container" id="streak-display">
+            <div class="streak-container">
                 <i class="fas fa-fire"></i> <span id="streak-count">0</span> días
             </div>
         </div>
     </header>
 
     <div class="hero-section">
-        <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1000&auto=format&fit=crop" alt="Paisaje inspirador" class="hero-img">
+        <img src="https://images.unsplash.com/photo-1507434965515-61970f2bd7c6?q=80&w=1000&auto=format&fit=crop" alt="Cielo" class="hero-img">
         <div class="hero-overlay">
-            <h2>Tu momento de paz</h2>
+            <h2>Tu guía diaria</h2>
         </div>
     </div>
 
@@ -35,21 +34,19 @@
         
         <div id="verse-card" class="card hidden">
             <span class="badge">Versículo de hoy</span>
-            <h3 id="verse-reference">Mateo 0:0</h3>
-            <p id="verse-text" class="verse-text">"..."</p>
+            <h3 id="verse-reference">Cargando...</h3>
+            <p id="verse-text" class="verse-text">...</p>
             
             <div class="explanation-box">
-                <h4>💡 ¿Qué significa?</h4>
+                <h4>💡 Explicación</h4>
                 <p id="verse-explanation">...</p>
             </div>
         </div>
 
         <div class="action-area">
-            <p class="instruction">Toca para descubrir la palabra de hoy y mantener tu racha.</p>
+            <p class="instruction">Descubre el mensaje que Dios tiene para ti hoy.</p>
             <button id="btn-generate" class="btn-primary">
-                <span class="btn-content">
-                    <i class="fas fa-dove"></i> Leer Versículo
-                </span>
+                <i class="fas fa-book-open"></i> Leer Palabra
             </button>
         </div>
     </div>
